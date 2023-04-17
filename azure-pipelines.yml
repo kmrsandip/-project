@@ -5,13 +5,20 @@
 
 trigger:
 - main
-
 pool:
-  vmImage: ubuntu-latest
+ name: Azure Pipelines
+stages:
+  - stage: build
+    jobs:
+      - job: A
+      - job: A1
+  - stage: test
+    jobs:
+      - job: B
+      - job: B1
+  - stage: deploy
+    jobs:
+      - job: C
+      - job: C1
+    
 
-steps:
-- task: ArchiveFiles@2
-  inputs:
-    rootFolderOrFile: '$(build.sourcesDirectory)'
-    includeRootFolder: false
-- task: PublishBuildArtifacts@1
