@@ -1,24 +1,32 @@
-# HTML
-# Archive your static HTML project and save it with the build record.
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
 trigger:
-- main
-pool:
- name: Azure Pipelines
-stages:
-  - stage: build
-    jobs:
-      - job: A
-      - job: A1
-  - stage: test
-    jobs:
-      - job: B
-      - job: B1
-  - stage: deploy
-    jobs:
-      - job: C
-      - job: C1
-    
+- master
 
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'restore'
+    projects: '**/*.csproj'
+    feedsToUse: 'select'
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'build'
+    projects: '**/*.csproj'
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: 'publish'
+    publishWebProjects: true
+    arguments: '--output $(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
