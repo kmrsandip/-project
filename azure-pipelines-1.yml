@@ -1,0 +1,25 @@
+# HTML
+# Archive your static HTML project and save it with the build record.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+name: Azure Pipelines
+stages:
+- stage: Build
+  jobs:
+    -  job: A
+    -  job: A1
+- stage: test
+  jobs:
+    - job: B
+    - job: B1
+- stage: Deploy
+  jobs:
+    - job: C
+    - job: C1
+  
+ 
